@@ -1,0 +1,100 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="dashboard-head">
+    <div>
+        <span class="eyebrow">✨ {{ t('hello') }}</span>
+        <h1>{{ current_user.name }} 💖</h1>
+        <p>Voici comment se porte ton budget aujourd’hui.</p>
+    </div>
+
+    <a class="primary-btn" href="{{ url_for('expense') }}">＋ {{ t('add_expense') }}</a>
+</section>
+
+<section class="summary-grid">
+    <article class="summary-card salary">
+        <span>💰 {{ t('salary') }}</span>
+        <strong>{{ "%.2f"|format(current_user.salary) }} {{ current_user.currency }}</strong>
+        <small>Budget mensuel</small>
+    </article>
+
+    <article class="summary-card spent">
+        <span>🧾 {{ t('spent') }}</span>
+        <strong>{{ "%.2f"|format(total_spent) }} {{ current_user.currency }}</strong>
+        <small>Dépenses enregistrées</small>
+    </article>
+
+    <article class="summary-card available">
+        <span>🌷 {{ t('remaining') }}</span>
+        <strong>{{ "%.2f"|format(available) }} {{ current_user.currency }}</strong>
+        <small>Encore disponible</small>
+    </article>
+
+    <article class="summary-card savings">
+        <span>🐷 {{ t('savings') }}</span>
+        <strong>{{ "%.2f"|format(total_savings) }} {{ current_user.currency }}</strong>
+        <small>Prévu pour tes objectifs</small>
+    </article>
+</section>
+
+<div class="dashboard-columns">
+    <section class="panel">
+        <div class="panel-title">
+            <div>
+                <span class="eyebrow">🌈 Répartition</span>
+                <h2>{{ t('categories') }}</h2>
+            </div>
+            <a class="small-link" href="{{ url_for('categories') }}">Gérer</a>
+        </div>
+
+        <div class="budget-list">
+            {% for item in data %}
+            <div class="budget-row">
+                <div class="budget-row-top">
+                    <div class="category-name">
+                        <span class="category-icon">{{ item.category.icon }}</span>
+                        <div>
+                            <strong>{{ item.category.name }}</strong>
+                            <small>{{ "%.0f"|format(item.remaining) }} {{ current_user.currency }} restant</small>
+                        </div>
+                    </div>
+                    <div class="budget-values">
+                        {{ "%.0f"|format(item.spent) }} / {{ "%.0f"|format(item.category.budget) }}
+                    </div>
+                </div>
+
+                <div class="progress-track">
+                    <span style="width: {{ item.pct }}%"></span>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+
+    <section class="panel">
+        <div class="panel-title">
+            <div>
+                <span class="eyebrow">🧾 Historique</span>
+                <h2>{{ t('recent') }}</h2>
+            </div>
+        </div>
+
+        <div class="tx-list">
+            {% for tx in txs %}
+            <div class="tx-row">
+                <div class="tx-icon">{{ tx.category.icon }}</div>
+                <div class="tx-info">
+                    <strong>{{ tx.category.name }}</strong>
+                    <small>{{ tx.description or tx.created_at.strftime('%d/%m/%Y') }}</small>
+                </div>
+                <div class="tx-amount">-{{ "%.2f"|format(tx.amount) }} {{ current_user.currency }}</div>
+            </div>
+            {% else %}
+            <div class="empty-state">
+                <div>🌸</div>
+                <p>{{ t('no_tx') }}</p>
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+</div>
+{% endblock %}

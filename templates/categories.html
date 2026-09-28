@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="form-card">
+    <div class="form-card-head">
+        <span class="pill">🌈 Budget</span>
+        <h1>{{ t('categories') }}</h1>
+        <p>Crée des catégories qui correspondent vraiment à ta vie.</p>
+    </div>
+
+    <form method="post" class="pretty-form">
+        <div class="two-cols">
+            <div>
+                <label>Emoji</label>
+                <input name="icon" placeholder="🌸">
+            </div>
+            <div>
+                <label>{{ t('name') }}</label>
+                <input name="name" placeholder="Ex. Maman" required>
+            </div>
+        </div>
+
+        <label>{{ t('budget') }}</label>
+        <input type="number" step="0.01" min="0" name="budget" required>
+
+        <label class="check-line">
+            <input type="checkbox" name="is_savings">
+            <span>🐷 Cette catégorie est une épargne</span>
+        </label>
+
+        <button class="primary-btn full" type="submit">{{ t('add_category') }}</button>
+    </form>
+</section>
+
+<section class="panel category-panel">
+    <div class="category-cards">
+        {% for c in categories %}
+        <article class="category-card">
+            <span class="category-big-icon">{{ c.icon }}</span>
+            <div>
+                <strong>{{ c.name }}</strong>
+                <small>{{ "%.2f"|format(c.budget) }} {{ current_user.currency }}</small>
+            </div>
+        </article>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="auth-wrap">
+    <div class="auth-card wide">
+        <div class="auth-icon">✨</div>
+        <h1>{{ t('register') }}</h1>
+        <p>Quelques secondes et ton espace budget sera prêt.</p>
+
+        <form method="post" class="pretty-form">
+            <label>{{ t('name') }}</label>
+            <input name="name" required>
+
+            <label>{{ t('email') }}</label>
+            <input type="email" name="email" required>
+
+            <label>{{ t('password') }}</label>
+            <input type="password" name="password" minlength="6" required>
+
+            <div class="two-cols">
+                <div>
+                    <label>{{ t('language') }}</label>
+                    <select name="language">
+                        <option value="fr">Français</option>
+                        <option value="en">English</option>
+                        <option value="ar">العربية</option>
+                    </select>
+                </div>
+                <div>
+                    <label>{{ t('currency') }}</label>
+                    <select name="currency">
+                        <option>MAD</option>
+                        <option>EUR</option>
+                        <option>USD</option>
+                        <option>CAD</option>
+                        <option>SAR</option>
+                        <option>AED</option>
+                    </select>
+                </div>
+            </div>
+
+            <button class="primary-btn full" type="submit">{{ t('register') }} 💖</button>
+        </form>
+    </div>
+</section>
+{% endblock %}

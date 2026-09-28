@@ -1,141 +1,75 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Smart Salary Planner</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-</head>
-<body>
+{% extends "base.html" %}
+{% block content %}
+<section class="hero-card">
+    <div class="hero-copy">
+        <span class="pill">✨ Cute • Simple • Smart</span>
+        <h1>{{ t('welcome') }}</h1>
+        <p>{{ t('welcome_sub') }}</p>
 
-    <div class="background-blur blur1"></div>
-    <div class="background-blur blur2"></div>
-
-    <header class="topbar">
-        <div class="logo">💰 Smart Salary Planner</div>
-        <div class="lang-switch">
-            <span>FR</span>
-            <span>EN</span>
-            <span>AR</span>
+        <div class="hero-buttons">
+            <a class="primary-btn" href="{{ url_for('register') }}">{{ t('start') }} 💖</a>
+            <a class="secondary-btn" href="{{ url_for('login') }}">{{ t('login') }}</a>
         </div>
-    </header>
 
-    <main class="hero-container">
-        <section class="hero-card">
-            <div class="hero-left">
-                <span class="badge">✨ Budget cute & intelligent</span>
-                <h1>
-                    Gère ton <span> salaire </span>,
-                    tes <span> dépenses </span>
-                    et ton <span> épargne </span>
-                    avec style 💖
-                </h1>
+        <div class="mini-features">
+            <span>🌸 Design doux</span>
+            <span>📊 Budget intelligent</span>
+            <span>🌍 FR / EN / AR</span>
+        </div>
+    </div>
 
-                <p>
-                    Une application simple, jolie et intelligente pour organiser ton argent,
-                    suivre tes responsabilités et savoir combien il te reste à tout moment.
-                </p>
-
-                <div class="hero-buttons">
-                    <button class="btn-primary">Commencer</button>
-                    <button class="btn-secondary">Découvrir</button>
-                </div>
-
-                <div class="mini-features">
-                    <div class="mini-card">🌸 Cute design</div>
-                    <div class="mini-card">📊 Budget intelligent</div>
-                    <div class="mini-card">🌍 FR / EN / AR</div>
-                </div>
+    <div class="phone-card">
+        <div class="phone-title">
+            <div>
+                <small>Septembre</small>
+                <strong>Mon budget ✨</strong>
             </div>
+            <div class="avatar">🌷</div>
+        </div>
 
-            <div class="hero-right">
-                <div class="phone-mockup">
-                    <div class="phone-header">
-                        <span>Bonjour Chaimaa 👋</span>
-                        <small>Septembre 2026</small>
-                    </div>
+        <div class="salary-card">
+            <small>Salaire</small>
+            <h2>5 500 DH</h2>
+            <span>+ prêt pour ce mois</span>
+        </div>
 
-                    <div class="salary-box">
-                        <p>Salaire</p>
-                        <h2>5 500 DH</h2>
-                    </div>
+        <div class="stats-grid">
+            <div class="mini-stat pink"><span>Dépensé</span><strong>2 180 DH</strong></div>
+            <div class="mini-stat lilac"><span>Disponible</span><strong>1 820 DH</strong></div>
+            <div class="mini-stat blue"><span>Épargne</span><strong>1 500 DH</strong></div>
+            <div class="mini-stat peach"><span>Shopping</span><strong>320 DH</strong></div>
+        </div>
 
-                    <div class="stats-grid">
-                        <div class="stat-card pink">
-                            <span>Dépensé</span>
-                            <strong>2 180 DH</strong>
-                        </div>
-                        <div class="stat-card purple">
-                            <span>Disponible</span>
-                            <strong>1 820 DH</strong>
-                        </div>
-                        <div class="stat-card blue">
-                            <span>Épargne</span>
-                            <strong>1 500 DH</strong>
-                        </div>
-                        <div class="stat-card peach">
-                            <span>Shopping</span>
-                            <strong>320 DH</strong>
-                        </div>
-                    </div>
+        <div class="progress-item">
+            <div><span>🛍 Shopping</span><b>320 / 1000</b></div>
+            <div class="track"><span style="width:32%"></span></div>
+        </div>
+        <div class="progress-item">
+            <div><span>🚗 Transport</span><b>240 / 800</b></div>
+            <div class="track blue-track"><span style="width:30%"></span></div>
+        </div>
+        <div class="progress-item">
+            <div><span>🐷 Épargne</span><b>1500 / 1500</b></div>
+            <div class="track lilac-track"><span style="width:100%"></span></div>
+        </div>
+    </div>
+</section>
 
-                    <div class="budget-progress">
-                        <div class="budget-item">
-                            <div class="budget-label">
-                                <span>🛍 Shopping</span>
-                                <span>320 / 1000 DH</span>
-                            </div>
-                            <div class="progress-bar">
-                                <div class="progress-fill fill1"></div>
-                            </div>
-                        </div>
-
-                        <div class="budget-item">
-                            <div class="budget-label">
-                                <span>🚗 Transport</span>
-                                <span>240 / 800 DH</span>
-                            </div>
-                            <div class="progress-bar">
-                                <div class="progress-fill fill2"></div>
-                            </div>
-                        </div>
-
-                        <div class="budget-item">
-                            <div class="budget-label">
-                                <span>🐷 Épargne</span>
-                                <span>1500 / 1500 DH</span>
-                            </div>
-                            <div class="progress-bar">
-                                <div class="progress-fill fill3"></div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <button class="add-expense-btn">＋ Ajouter une dépense</button>
-                </div>
-            </div>
-        </section>
-
-        <section class="features-section">
-            <div class="feature-card">
-                <div class="feature-icon">💡</div>
-                <h3>Budget intelligent</h3>
-                <p>L’application répartit ton salaire selon tes responsabilités.</p>
-            </div>
-
-            <div class="feature-card">
-                <div class="feature-icon">🧾</div>
-                <h3>Suivi des dépenses</h3>
-                <p>Ajoute chaque dépense et vois automatiquement le reste disponible.</p>
-            </div>
-
-            <div class="feature-card">
-                <div class="feature-icon">🎯</div>
-                <h3>Objectifs d’épargne</h3>
-                <p>Prépare un voyage, une voiture ou un fonds d’urgence facilement.</p>
-            </div>
-        </section>
-    </main>
-
-</body>
-</html>
+<section class="feature-grid">
+    <article class="feature-card">
+        <div class="feature-icon">💡</div>
+        <h3>Budget personnalisé</h3>
+        <p>Ton salaire est réparti selon tes responsabilités et tes priorités.</p>
+    </article>
+    <article class="feature-card">
+        <div class="feature-icon">🧾</div>
+        <h3>Dépenses en temps réel</h3>
+        <p>Chaque achat diminue automatiquement le budget restant de sa catégorie.</p>
+    </article>
+    <article class="feature-card">
+        <div class="feature-icon">🎯</div>
+        <h3>Objectifs motivants</h3>
+        <p>Suis ton épargne avec une interface claire, légère et encourageante.</p>
+    </article>
+</section>
+{% endblock %}

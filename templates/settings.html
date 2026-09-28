@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="form-card">
+    <div class="form-card-head">
+        <span class="pill">⚙️ Personnalisation</span>
+        <h1>{{ t('settings') }}</h1>
+    </div>
+
+    <form method="post" class="pretty-form">
+        <label>{{ t('monthly_salary') }}</label>
+        <input type="number" step="0.01" min="0" name="salary" value="{{ current_user.salary }}">
+
+        <div class="two-cols">
+            <div>
+                <label>{{ t('currency') }}</label>
+                <select name="currency">
+                    {% for c in ['MAD','EUR','USD','CAD','SAR','AED'] %}
+                    <option value="{{ c }}" {{ 'selected' if c == current_user.currency else '' }}>{{ c }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div>
+                <label>{{ t('language') }}</label>
+                <select name="language">
+                    <option value="fr" {{ 'selected' if current_user.language == 'fr' else '' }}>Français</option>
+                    <option value="en" {{ 'selected' if current_user.language == 'en' else '' }}>English</option>
+                    <option value="ar" {{ 'selected' if current_user.language == 'ar' else '' }}>العربية</option>
+                </select>
+            </div>
+        </div>
+
+        <button class="primary-btn full" type="submit">{{ t('save') }} 💖</button>
+    </form>
+</section>
+{% endblock %}

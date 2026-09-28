@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="form-card">
+    <div class="form-card-head">
+        <span class="pill">🛍️ Dépense</span>
+        <h1>{{ t('add_expense') }}</h1>
+        <p>Ajoute ton achat et le budget restant sera recalculé automatiquement.</p>
+    </div>
+
+    <form method="post" class="pretty-form">
+        <label>{{ t('category') }}</label>
+        <select name="category_id" required>
+            {% for c in categories %}
+                <option value="{{ c.id }}">{{ c.icon }} {{ c.name }}</option>
+            {% endfor %}
+        </select>
+
+        <label>{{ t('amount') }}</label>
+        <input type="number" step="0.01" min="0.01" name="amount" required>
+
+        <label>{{ t('description') }}</label>
+        <input name="description" placeholder="Ex. Zara, café, essence...">
+
+        <button class="primary-btn full" type="submit">{{ t('save') }} ✨</button>
+    </form>
+</section>
+{% endblock %}

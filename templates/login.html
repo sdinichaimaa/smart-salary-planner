@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="auth-wrap">
+    <div class="auth-card">
+        <div class="auth-icon">🌸</div>
+        <h1>{{ t('login') }}</h1>
+        <p>Retrouve ton budget et continue là où tu t’es arrêtée ✨</p>
+
+        <form method="post" class="pretty-form">
+            <label>{{ t('email') }}</label>
+            <input type="email" name="email" placeholder="hello@example.com" required>
+
+            <label>{{ t('password') }}</label>
+            <input type="password" name="password" placeholder="••••••••" required>
+
+            <button class="primary-btn full" type="submit">{{ t('login') }} 💗</button>
+        </form>
+
+        <p class="auth-bottom">Pas encore de compte ?
+            <a href="{{ url_for('register') }}">{{ t('register') }}</a>
+        </p>
+    </div>
+</section>
+{% endblock %}

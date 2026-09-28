@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="setup-card">
+    <div class="setup-copy">
+        <span class="pill">💖 Étape 1</span>
+        <h1>{{ t('setup_title') }}</h1>
+        <p>{{ t('setup_sub') }}</p>
+    </div>
+
+    <form method="post" class="pretty-form setup-form">
+        <label>{{ t('monthly_salary') }}</label>
+        <div class="money-input">
+            <input type="number" step="0.01" min="0" name="salary" placeholder="5500" required>
+            <span>💸</span>
+        </div>
+
+        <div class="two-cols">
+            <div>
+                <label>{{ t('currency') }}</label>
+                <select name="currency">
+                    <option>MAD</option><option>EUR</option><option>USD</option>
+                    <option>CAD</option><option>SAR</option><option>AED</option>
+                </select>
+            </div>
+            <div>
+                <label>{{ t('language') }}</label>
+                <select name="language">
+                    <option value="fr">Français</option>
+                    <option value="en">English</option>
+                    <option value="ar">العربية</option>
+                </select>
+            </div>
+        </div>
+
+        <button class="primary-btn full" type="submit">Créer mon budget ✨</button>
+    </form>
+</section>
+{% endblock %}
