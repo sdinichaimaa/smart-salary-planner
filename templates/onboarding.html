@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="wizard-head">
+    <div>
+        <span class="step-pill">1</span>
+        <span class="step-text">Ton salaire & tes responsabilités</span>
+    </div>
+    <div class="steps">
+        <span class="active"></span><span></span><span></span>
+    </div>
+</section>
+
+<section class="onboarding-layout">
+    <div class="intro-panel">
+        <span class="badge">💸 Commençons par toi</span>
+        <h1>Où doit aller ton salaire chaque mois ?</h1>
+        <p>
+            Ajoute uniquement les choses dont tu es réellement responsable :
+            famille, loyer, formation, transport, crédit, téléphone, etc.
+        </p>
+
+        <div class="tip">
+            💡 Tu n'as pas besoin d'ajouter l'épargne ou les loisirs maintenant.
+            L'application analysera ce qu'il reste et te fera une proposition.
+        </div>
+    </div>
+
+    <form method="post" class="budget-builder">
+        <div class="salary-block">
+            <label>Ton salaire mensuel</label>
+            <div class="salary-inputs">
+                <input type="number" name="salary" min="1" step="0.01"
+                       value="{{ salary }}" placeholder="Ex. 5500" required>
+                <select name="currency">
+                    {% for c in ['MAD','EUR','USD','CAD','SAR','AED'] %}
+                    <option value="{{ c }}" {{ 'selected' if currency == c else '' }}>{{ c }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+
+        <div class="responsibilities-title">
+            <div>
+                <h2>Mes responsabilités</h2>
+                <p>Ajoute une ligne pour chaque engagement régulier.</p>
+            </div>
+            <button type="button" class="mini-btn" id="add-responsibility">＋ Ajouter</button>
+        </div>
+
+        <div id="responsibilities">
+            {% if responsibilities %}
+                {% for r in responsibilities %}
+                <div class="responsibility-row">
+                    <input class="emoji-field" name="responsibility_icon[]" value="{{ r.icon }}">
+                    <input name="responsibility_name[]" value="{{ r.name }}" placeholder="Ex. Maman" required>
+                    <input name="responsibility_amount[]" type="number" min="0.01" step="0.01"
+                           value="{{ r.amount }}" placeholder="Montant" required>
+                    <button type="button" class="remove-row">×</button>
+                </div>
+                {% endfor %}
+            {% else %}
+                <div class="responsibility-row">
+                    <input class="emoji-field" name="responsibility_icon[]" value="❤️">
+                    <input name="responsibility_name[]" placeholder="Ex. Maman" required>
+                    <input name="responsibility_amount[]" type="number" min="0.01" step="0.01"
+                           placeholder="Montant" required>
+                    <button type="button" class="remove-row">×</button>
+                </div>
+                <div class="responsibility-row">
+                    <input class="emoji-field" name="responsibility_icon[]" value="🚗">
+                    <input name="responsibility_name[]" placeholder="Ex. Transport">
+                    <input name="responsibility_amount[]" type="number" min="0.01" step="0.01"
+                           placeholder="Montant">
+                    <button type="button" class="remove-row">×</button>
+                </div>
+            {% endif %}
+        </div>
+
+        <button class="btn primary full big-button">Analyser mon budget ✨</button>
+    </form>
+</section>
+{% endblock %}

@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="center-card spend-entry">
+    <span class="huge-icon">{{ category.icon }}</span>
+    <span class="badge">{{ category.name }}</span>
+    {% if category.is_savings %}
+    <h1>Combien as-tu pris de ton épargne ?</h1>
+    <p class="muted">Ex. achat d’un matelas, urgence, projet personnel…</p>
+    {% else %}
+    <h1>Combien as-tu utilisé ?</h1>
+    {% endif %}
+
+    <div class="category-summary">
+        <div><span>Budget</span><b>{{ "%.2f"|format(category.budget) }}</b></div>
+        <div><span>Déjà utilisé</span><b>{{ "%.2f"|format(spent) }}</b></div>
+        <div class="highlight"><span>Reste</span><b>{{ "%.2f"|format(remaining) }} {{ current_user.currency }}</b></div>
+    </div>
+
+    <form method="post" class="form">
+        <label>{% if category.is_savings %}Montant pris de l'épargne{% else %}Montant dépensé{% endif %}</label>
+        <input class="big-money" type="number" name="amount" min="0.01" max="{{ remaining }}"
+               step="0.01" placeholder="0.00" required>
+
+        <label>Petit détail (optionnel)</label>
+        <input name="description"
+               placeholder="{% if category.is_savings %}Ex. Matelas, urgence, voyage...{% else %}Ex. Essence, Zara, café...{% endif %}">
+
+        <button class="btn primary full big-button">
+            {% if category.is_savings %}Enregistrer le retrait d'épargne 🐷{% else %}Enregistrer la dépense ✨{% endif %}
+        </button>
+    </form>
+</section>
+{% endblock %}

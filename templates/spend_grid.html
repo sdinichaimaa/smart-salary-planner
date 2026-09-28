@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="spend-head">
+    <div>
+        <span class="badge">🛍️ Mise à jour rapide</span>
+        <h1>Dans quelle catégorie as-tu utilisé de l'argent ?</h1>
+        <p>Choisis une catégorie. Pour l’épargne aussi, tu peux enregistrer un retrait ou un achat payé avec ton épargne.</p>
+    </div>
+    <a class="btn secondary" href="{{ url_for('dashboard') }}">← Retour</a>
+</section>
+
+<section class="spend-grid">
+    {% for item in cards %}
+    <a class="spend-card" href="{{ url_for('spend_category', category_id=item.category.id) }}">
+        <span class="spend-icon">{{ item.category.icon }}</span>
+        <h3>{{ item.category.name }}{% if item.category.is_savings %} 🐷{% endif %}</h3>
+        {% if item.category.is_savings %}
+        <div class="savings-badge">Retrait d'épargne possible</div>
+        {% endif %}
+        <div class="spend-numbers">
+            <span>Utilisé</span>
+            <b>{{ "%.2f"|format(item.spent) }} {{ current_user.currency }}</b>
+        </div>
+        <div class="spend-numbers remaining">
+            <span>Reste</span>
+            <b>{{ "%.2f"|format(item.remaining) }} {{ current_user.currency }}</b>
+        </div>
+        <span class="select-card">Choisir →</span>
+    </a>
+    {% endfor %}
+</section>
+{% endblock %}

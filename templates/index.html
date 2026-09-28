@@ -1,75 +1,28 @@
 {% extends "base.html" %}
 {% block content %}
-<section class="hero-card">
-    <div class="hero-copy">
-        <span class="pill">✨ Cute • Simple • Smart</span>
-        <h1>{{ t('welcome') }}</h1>
-        <p>{{ t('welcome_sub') }}</p>
-
-        <div class="hero-buttons">
-            <a class="primary-btn" href="{{ url_for('register') }}">{{ t('start') }} 💖</a>
-            <a class="secondary-btn" href="{{ url_for('login') }}">{{ t('login') }}</a>
-        </div>
-
-        <div class="mini-features">
-            <span>🌸 Design doux</span>
-            <span>📊 Budget intelligent</span>
-            <span>🌍 FR / EN / AR</span>
+<section class="landing">
+    <div>
+        <span class="badge">✨ Ton argent, mais en plus simple</span>
+        <h1>Construis un budget qui ressemble vraiment à ta vie.</h1>
+        <p>
+            Tu renseignes ton salaire et tes responsabilités.
+            L'application analyse le reste, te propose une répartition
+            et te permet ensuite de suivre chaque dirham dépensé.
+        </p>
+        <div class="actions">
+            <a class="btn primary" href="{{ url_for('register') }}">Créer mon budget 💖</a>
+            <a class="btn secondary" href="{{ url_for('login') }}">Se connecter</a>
         </div>
     </div>
 
-    <div class="phone-card">
-        <div class="phone-title">
-            <div>
-                <small>Septembre</small>
-                <strong>Mon budget ✨</strong>
-            </div>
-            <div class="avatar">🌷</div>
-        </div>
-
-        <div class="salary-card">
-            <small>Salaire</small>
-            <h2>5 500 DH</h2>
-            <span>+ prêt pour ce mois</span>
-        </div>
-
-        <div class="stats-grid">
-            <div class="mini-stat pink"><span>Dépensé</span><strong>2 180 DH</strong></div>
-            <div class="mini-stat lilac"><span>Disponible</span><strong>1 820 DH</strong></div>
-            <div class="mini-stat blue"><span>Épargne</span><strong>1 500 DH</strong></div>
-            <div class="mini-stat peach"><span>Shopping</span><strong>320 DH</strong></div>
-        </div>
-
-        <div class="progress-item">
-            <div><span>🛍 Shopping</span><b>320 / 1000</b></div>
-            <div class="track"><span style="width:32%"></span></div>
-        </div>
-        <div class="progress-item">
-            <div><span>🚗 Transport</span><b>240 / 800</b></div>
-            <div class="track blue-track"><span style="width:30%"></span></div>
-        </div>
-        <div class="progress-item">
-            <div><span>🐷 Épargne</span><b>1500 / 1500</b></div>
-            <div class="track lilac-track"><span style="width:100%"></span></div>
-        </div>
+    <div class="preview-card">
+        <div class="preview-heart">🌷</div>
+        <span>Exemple</span>
+        <h2>5 500 MAD</h2>
+        <div class="preview-line"><b>❤️ Maman</b><span>500</span></div>
+        <div class="preview-line"><b>🎓 Formation</b><span>1 100</span></div>
+        <div class="preview-line"><b>🚗 Transport</b><span>800</span></div>
+        <div class="preview-total"><span>Reste à organiser</span><strong>3 100 MAD</strong></div>
     </div>
-</section>
-
-<section class="feature-grid">
-    <article class="feature-card">
-        <div class="feature-icon">💡</div>
-        <h3>Budget personnalisé</h3>
-        <p>Ton salaire est réparti selon tes responsabilités et tes priorités.</p>
-    </article>
-    <article class="feature-card">
-        <div class="feature-icon">🧾</div>
-        <h3>Dépenses en temps réel</h3>
-        <p>Chaque achat diminue automatiquement le budget restant de sa catégorie.</p>
-    </article>
-    <article class="feature-card">
-        <div class="feature-icon">🎯</div>
-        <h3>Objectifs motivants</h3>
-        <p>Suis ton épargne avec une interface claire, légère et encourageante.</p>
-    </article>
 </section>
 {% endblock %}

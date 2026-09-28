@@ -1,100 +1,93 @@
 {% extends "base.html" %}
 {% block content %}
-<section class="dashboard-head">
+<section class="dashboard-header">
     <div>
-        <span class="eyebrow">✨ {{ t('hello') }}</span>
-        <h1>{{ current_user.name }} 💖</h1>
-        <p>Voici comment se porte ton budget aujourd’hui.</p>
+        <span class="badge">🌷 Mon mois</span>
+        <h1>Bonjour {{ current_user.name }} 💖</h1>
+        <p>Voici exactement ce qu'il te reste dans chaque catégorie.</p>
+    </div>
+    <a class="btn primary" href="{{ url_for('spend_grid') }}">＋ J'ai dépensé</a>
+</section>
+
+<section class="kpi-grid">
+    <article class="kpi pink">
+        <span>💰 Salaire</span>
+        <strong>{{ "%.2f"|format(current_user.salary) }} {{ current_user.currency }}</strong>
+    </article>
+    <article class="kpi peach">
+        <span>🧾 Dépensé</span>
+        <strong>{{ "%.2f"|format(total_used) }} {{ current_user.currency }}</strong>
+    </article>
+    <article class="kpi blue">
+        <span>🌷 Reste total catégories</span>
+        <strong>{{ "%.2f"|format(total_remaining_categories) }} {{ current_user.currency }}</strong>
+    </article>
+    <article class="kpi green">
+        <span>🐷 Épargne restante</span>
+        <strong>{{ "%.2f"|format(total_savings_remaining) }} {{ current_user.currency }}</strong>
+        <small>
+            Prévue {{ "%.2f"|format(total_savings_planned) }} ·
+            utilisée {{ "%.2f"|format(total_savings_used) }}
+        </small>
+    </article>
+</section>
+
+<section class="dashboard-grid">
+    <div class="panel categories-panel">
+        <div class="panel-title-row">
+            <div>
+                <span class="subtle-title">🌈 Ta répartition</span>
+                <h2>Catégories</h2>
+            </div>
+            <a href="{{ url_for('spend_grid') }}" class="text-link">Enregistrer une dépense →</a>
+        </div>
+
+        {% for item in cards %}
+        <div class="budget-line">
+            <div class="budget-line-top">
+                <div class="budget-name">
+                    <span class="round-icon">{{ item.category.icon }}</span>
+                    <div>
+                        <strong>{{ item.category.name }}{% if item.category.is_savings %} · réserve{% endif %}</strong>
+                        <small>
+                            {{ "%.2f"|format(item.remaining) }} {{ current_user.currency }}
+                            {% if item.category.is_savings %}encore épargné{% else %}restant{% endif %}
+                        </small>
+                    </div>
+                </div>
+                <div class="amount-side">
+                    <b>{{ "%.2f"|format(item.spent) }}</b>
+                    <span>/ {{ "%.2f"|format(item.category.budget) }}</span>
+                </div>
+            </div>
+            <div class="progress"><span style="width: {{ item.pct }}%"></span></div>
+        </div>
+        {% endfor %}
     </div>
 
-    <a class="primary-btn" href="{{ url_for('expense') }}">＋ {{ t('add_expense') }}</a>
-</section>
-
-<section class="summary-grid">
-    <article class="summary-card salary">
-        <span>💰 {{ t('salary') }}</span>
-        <strong>{{ "%.2f"|format(current_user.salary) }} {{ current_user.currency }}</strong>
-        <small>Budget mensuel</small>
-    </article>
-
-    <article class="summary-card spent">
-        <span>🧾 {{ t('spent') }}</span>
-        <strong>{{ "%.2f"|format(total_spent) }} {{ current_user.currency }}</strong>
-        <small>Dépenses enregistrées</small>
-    </article>
-
-    <article class="summary-card available">
-        <span>🌷 {{ t('remaining') }}</span>
-        <strong>{{ "%.2f"|format(available) }} {{ current_user.currency }}</strong>
-        <small>Encore disponible</small>
-    </article>
-
-    <article class="summary-card savings">
-        <span>🐷 {{ t('savings') }}</span>
-        <strong>{{ "%.2f"|format(total_savings) }} {{ current_user.currency }}</strong>
-        <small>Prévu pour tes objectifs</small>
-    </article>
-</section>
-
-<div class="dashboard-columns">
-    <section class="panel">
-        <div class="panel-title">
+    <div class="panel">
+        <div class="panel-title-row">
             <div>
-                <span class="eyebrow">🌈 Répartition</span>
-                <h2>{{ t('categories') }}</h2>
+                <span class="subtle-title">🧾 Activité</span>
+                <h2>Dernières dépenses</h2>
             </div>
-            <a class="small-link" href="{{ url_for('categories') }}">Gérer</a>
         </div>
 
-        <div class="budget-list">
-            {% for item in data %}
-            <div class="budget-row">
-                <div class="budget-row-top">
-                    <div class="category-name">
-                        <span class="category-icon">{{ item.category.icon }}</span>
-                        <div>
-                            <strong>{{ item.category.name }}</strong>
-                            <small>{{ "%.0f"|format(item.remaining) }} {{ current_user.currency }} restant</small>
-                        </div>
-                    </div>
-                    <div class="budget-values">
-                        {{ "%.0f"|format(item.spent) }} / {{ "%.0f"|format(item.category.budget) }}
-                    </div>
-                </div>
-
-                <div class="progress-track">
-                    <span style="width: {{ item.pct }}%"></span>
-                </div>
-            </div>
-            {% endfor %}
-        </div>
-    </section>
-
-    <section class="panel">
-        <div class="panel-title">
+        {% for tx in txs %}
+        <div class="tx">
+            <span class="round-icon">{{ tx.category.icon }}</span>
             <div>
-                <span class="eyebrow">🧾 Historique</span>
-                <h2>{{ t('recent') }}</h2>
+                <strong>{{ tx.category.name }}</strong>
+                <small>{{ tx.description or tx.created_at.strftime('%d/%m/%Y') }}</small>
             </div>
+            <b>-{{ "%.2f"|format(tx.amount) }}</b>
         </div>
-
-        <div class="tx-list">
-            {% for tx in txs %}
-            <div class="tx-row">
-                <div class="tx-icon">{{ tx.category.icon }}</div>
-                <div class="tx-info">
-                    <strong>{{ tx.category.name }}</strong>
-                    <small>{{ tx.description or tx.created_at.strftime('%d/%m/%Y') }}</small>
-                </div>
-                <div class="tx-amount">-{{ "%.2f"|format(tx.amount) }} {{ current_user.currency }}</div>
-            </div>
-            {% else %}
-            <div class="empty-state">
-                <div>🌸</div>
-                <p>{{ t('no_tx') }}</p>
-            </div>
-            {% endfor %}
+        {% else %}
+        <div class="empty">
+            <span>🌸</span>
+            <p>Pas encore de dépense. Quand tu achètes quelque chose, clique sur “J'ai dépensé”.</p>
         </div>
-    </section>
-</div>
+        {% endfor %}
+    </div>
+</section>
 {% endblock %}

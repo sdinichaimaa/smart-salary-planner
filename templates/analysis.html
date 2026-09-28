@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="wizard-head">
+    <div>
+        <span class="step-pill">2</span>
+        <span class="step-text">Analyse & proposition</span>
+    </div>
+    <div class="steps">
+        <span class="active"></span><span class="active"></span><span></span>
+    </div>
+</section>
+
+<section class="analysis-hero">
+    <div>
+        <span class="badge">✨ Ton analyse</span>
+        <h1>Voilà comment ton salaire se répartit.</h1>
+        <p>
+            Tes responsabilités utilisent <strong>{{ ratio }} %</strong> de ton salaire.
+            Il reste <strong>{{ "%.2f"|format(remaining) }} {{ draft.currency }}</strong>
+            à organiser.
+        </p>
+    </div>
+
+    <div class="analysis-summary">
+        <div><span>Salaire</span><strong>{{ "%.2f"|format(draft.salary) }} {{ draft.currency }}</strong></div>
+        <div><span>Responsabilités</span><strong>{{ "%.2f"|format(fixed_total) }} {{ draft.currency }}</strong></div>
+        <div class="highlight"><span>Reste</span><strong>{{ "%.2f"|format(remaining) }} {{ draft.currency }}</strong></div>
+    </div>
+</section>
+
+<section class="analysis-grid">
+    <div class="panel">
+        <div class="panel-head">
+            <span>💳</span>
+            <div><h2>Tes responsabilités</h2><p>Celles que tu viens de renseigner</p></div>
+        </div>
+
+        {% for r in draft.responsibilities %}
+        <div class="analysis-row">
+            <span class="round-icon">{{ r.icon }}</span>
+            <strong>{{ r.name }}</strong>
+            <b>{{ "%.2f"|format(r.amount) }} {{ draft.currency }}</b>
+        </div>
+        {% endfor %}
+    </div>
+
+    <div class="panel recommendation">
+        <div class="panel-head">
+            <span>💖</span>
+            <div><h2>Proposition pour le reste</h2><p>Tu peux modifier avant de valider</p></div>
+        </div>
+
+        <form method="post" class="suggest-form">
+            <label>
+                <span>🐷 Épargne</span>
+                <small>Objectifs, projets, futur</small>
+                <input type="number" name="savings" min="0" step="0.01" value="{{ suggested_savings }}">
+            </label>
+            <label>
+                <span>🛟 Urgences</span>
+                <small>Imprévus et sécurité</small>
+                <input type="number" name="emergency" min="0" step="0.01" value="{{ suggested_emergency }}">
+            </label>
+            <label>
+                <span>🌸 Personnel & plaisir</span>
+                <small>Shopping, sorties, petits plaisirs</small>
+                <input type="number" name="flexible" min="0" step="0.01" value="{{ suggested_flexible }}">
+            </label>
+
+            <div class="suggest-note">
+                Cette proposition répartit le montant restant. Tu gardes toujours le contrôle.
+            </div>
+
+            <button class="btn primary full big-button">Créer mon budget 💗</button>
+        </form>
+    </div>
+</section>
+{% endblock %}
